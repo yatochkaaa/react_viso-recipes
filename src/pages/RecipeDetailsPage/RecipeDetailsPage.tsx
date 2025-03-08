@@ -6,6 +6,7 @@ import "./recipe-details-page.css";
 import { useWishlist } from "../../composables/useWishlist";
 import { FaHeart } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
+import { ClipLoader } from "react-spinners";
 
 function RecipePage() {
   let { id } = useParams();
@@ -25,7 +26,20 @@ function RecipePage() {
   }, [mealQuery.data]);
 
   if (mealQuery.isLoading) {
-    return <div>Loading recipe ...</div>;
+    return (
+      <ClipLoader
+        color="white"
+        loading={true}
+        size={150}
+        aria-label="Loading Spinner"
+        cssOverride={{
+          display: "block",
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginTop: 300,
+        }}
+      />
+    );
   }
 
   if (mealQuery.isError) {
