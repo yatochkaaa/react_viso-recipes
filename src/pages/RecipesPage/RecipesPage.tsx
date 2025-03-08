@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import RecipesHeader from "../../components/recipes/RecipesHeader";
 import "./recipes-page.css";
 import RecipesGrid from "../../components/recipes/RecipesGrid/RecipesGrid";
+import RecipesPagination from "../../components/recipes/RecipesPagination/RecipesPagination";
+import { Meal } from "../../types/meals";
 
 function RecipesPage() {
   const mealsCategoriesQuery = useQuery({
@@ -12,12 +14,25 @@ function RecipesPage() {
   });
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [allMeals, setAllMeals] = useState<Meal[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [mealsPerPage] = useState(9);
+  const indexOfLastMeal = currentPage * mealsPerPage;
+  const indexOfFirstMeal = indexOfLastMeal - mealsPerPage;
+  const currentMeals = allMeals.slice(indexOfFirstMeal, indexOfLastMeal);
+  const totalPages = Math.ceil(allMeals.length / mealsPerPage);
 
   const mealsQuery = useQuery({
     queryKey: ["meals", selectedCategory],
     queryFn: () => getMeals(selectedCategory!),
     enabled: !!selectedCategory,
   });
+
+  useEffect(() => {
+    if (mealsQuery.data) {
+      setAllMeals(mealsQuery.data.meals || []);
+    }
+  }, [mealsQuery.data]);
 
   useEffect(() => {
     if (
@@ -38,12 +53,29 @@ function RecipesPage() {
     );
   }
 
+  function handlePageChange(page: number) {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+    setAllMeals([]);
+    setCurrentPage(1);
+  };
+
   return (
     <main className="recipes-page">
       <RecipesHeader
         categories={mealsCategoriesQuery.data?.meals || []}
         selectedCategory={selectedCategory}
-        selectCategory={setSelectedCategory}
+        selectCategory={handleCategoryChange}
       />
 
       {mealsQuery.isLoading ? (
@@ -51,8 +83,14 @@ function RecipesPage() {
       ) : mealsQuery.isError ? (
         <div>Error loading meals: {mealsQuery.error.message}</div>
       ) : (
-        <RecipesGrid recipes={mealsQuery.data?.meals || []} />
+        <RecipesGrid recipes={currentMeals || []} />
       )}
+
+      <RecipesPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePageChange={handlePageChange}
+      />
     </main>
   );
 }

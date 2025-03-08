@@ -1,0 +1,28 @@
+.recipes-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  width: 90%;
+  max-width: 90rem;
+  margin: 2rem auto;
+  list-style: none;
+  padding: 0;
+}
+
+.recipes-pagination > button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #f9572a, #ff9b05);
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.recipes-pagination > button.active {
+  color: #2c1e19;
+}
+
+.recipes-pagination > button:disabled {
+  background: linear-gradient(90deg, #2c1e19, #25200f);
+  cursor: not-allowed;
+}

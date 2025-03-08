@@ -6,7 +6,7 @@ interface GetCategoriesResponse {
   meals: MealCategory[];
 }
 
-interface GetMealsResponse {
+export interface GetMealsResponse {
   meals: Meal[];
 }
 
