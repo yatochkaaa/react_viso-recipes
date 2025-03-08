@@ -3,6 +3,7 @@ import { getMeals, getMealsCategories } from "../../api/meals";
 import { useState, useEffect } from "react";
 import RecipesHeader from "../../components/recipes/RecipesHeader";
 import "./recipes-page.css";
+import RecipesGrid from "../../components/recipes/RecipesGrid/RecipesGrid";
 
 function RecipesPage() {
   // Запрос категорий
@@ -49,20 +50,13 @@ function RecipesPage() {
         selectCategory={setSelectedCategory}
       />
 
-      <div>
-        <h2>Meals:</h2>
-        {mealsQuery.isLoading ? (
-          <div>Loading meals...</div>
-        ) : mealsQuery.isError ? (
-          <div>Error loading meals: {mealsQuery.error.message}</div>
-        ) : (
-          <ul>
-            {mealsQuery.data?.meals.map((meal) => (
-              <li key={meal.idMeal}>{meal.strMeal}</li>
-            ))}
-          </ul>
-        )}
-      </div>
+      {mealsQuery.isLoading ? (
+        <div>Loading meals...</div>
+      ) : mealsQuery.isError ? (
+        <div>Error loading meals: {mealsQuery.error.message}</div>
+      ) : (
+        <RecipesGrid recipes={mealsQuery.data?.meals || []} />
+      )}
     </main>
   );
 }
