@@ -46,9 +46,18 @@ function RecipesPage() {
 
   if (mealsCategoriesQuery.isLoading) {
     return (
-      <h1 style={{ textAlign: "center", marginTop: 48, color: "#ddd6cb" }}>
-        Loading...
-      </h1>
+      <ClipLoader
+        color="white"
+        loading={true}
+        size={150}
+        aria-label="Loading Spinner"
+        cssOverride={{
+          display: "block",
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginTop: 300,
+        }}
+      />
     );
   }
 
