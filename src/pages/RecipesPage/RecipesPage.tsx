@@ -45,7 +45,19 @@ function RecipesPage() {
   }, [mealsCategoriesQuery.data]);
 
   if (mealsCategoriesQuery.isLoading) {
-    return <div>Loading categories...</div>;
+    return (
+      <ClipLoader
+        color="white"
+        loading={true}
+        size={150}
+        aria-label="Loading Spinner"
+        cssOverride={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+        }}
+      />
+    );
   }
 
   if (mealsCategoriesQuery.isError) {
