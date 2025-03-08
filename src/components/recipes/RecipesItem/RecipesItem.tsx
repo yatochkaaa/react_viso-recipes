@@ -8,7 +8,7 @@ interface Props {
 
 export default function MealItem({ recipe }: Props) {
   return (
-    <article className="meal">
+    <article className="recipe-item">
       <header>
         <div className="image">
           <img src={recipe.strMealThumb} alt="" />
@@ -20,7 +20,7 @@ export default function MealItem({ recipe }: Props) {
       </header>
       <div className="content">
         <div className="actions">
-          <Link to={`/meals/${recipe.idMeal}`}>View Details</Link>
+          <Link to={recipe.idMeal}>View Details</Link>
         </div>
       </div>
     </article>

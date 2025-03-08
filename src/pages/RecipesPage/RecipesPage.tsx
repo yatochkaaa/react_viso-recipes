@@ -6,23 +6,19 @@ import "./recipes-page.css";
 import RecipesGrid from "../../components/recipes/RecipesGrid/RecipesGrid";
 
 function RecipesPage() {
-  // Запрос категорий
   const mealsCategoriesQuery = useQuery({
     queryKey: ["categories"],
     queryFn: getMealsCategories,
   });
 
-  // Состояние для выбранной категории
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Запрос для получения meals по выбранной категории
   const mealsQuery = useQuery({
     queryKey: ["meals", selectedCategory],
     queryFn: () => getMeals(selectedCategory!),
-    enabled: !!selectedCategory, // Запрос выполняется только если категория выбрана
+    enabled: !!selectedCategory,
   });
 
-  // После загрузки категорий, сразу выбрать первую категорию
   useEffect(() => {
     if (
       mealsCategoriesQuery.data?.meals &&
@@ -30,7 +26,7 @@ function RecipesPage() {
     ) {
       setSelectedCategory(mealsCategoriesQuery.data.meals[0].strCategory);
     }
-  }, [mealsCategoriesQuery.data]); // Запускаем этот эффект, когда категории загружены
+  }, [mealsCategoriesQuery.data]);
 
   if (mealsCategoriesQuery.isLoading) {
     return <div>Loading categories...</div>;
@@ -43,7 +39,7 @@ function RecipesPage() {
   }
 
   return (
-    <main>
+    <main className="recipes-page">
       <RecipesHeader
         categories={mealsCategoriesQuery.data?.meals || []}
         selectedCategory={selectedCategory}

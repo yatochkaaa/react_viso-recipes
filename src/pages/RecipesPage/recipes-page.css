@@ -1,4 +1,4 @@
-.header {
+.recipes-page .header {
   gap: 3rem;
   margin: 3rem auto 5rem auto;
   width: 90%;
@@ -7,19 +7,19 @@
   font-size: 1.5rem;
 }
 
-.header h1 {
+.recipes-page .header h1 {
   font-family: "Montserrat", sans-serif;
   text-align: center;
 }
 
-.header ul {
+.recipes-page .header ul {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap:  24px;
 }
 
-.highlight {
+.recipes-page .highlight {
   background: linear-gradient(90deg, #f9572a, #ff8a05);
   background-clip: text;
   -webkit-background-clip: text;

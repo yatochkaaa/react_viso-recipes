@@ -1,4 +1,4 @@
-.meal {
+.recipe-item {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -11,11 +11,11 @@
   background: linear-gradient(90deg, #2c1e19, #25200f);
 }
 
-.headerText {
+.recipe-item .headerText {
   padding: 0.5rem 1rem 0 1rem;
 }
 
-.headerText h2 {
+.recipe-item .headerText h2 {
   margin: 0;
   font-size: 1.5rem;
   font-family: "Montserrat", sans-serif;
@@ -24,42 +24,42 @@
   overflow: hidden;
 }
 
-.headerText p {
+.recipe-item .headerText p {
   font-size: 0.75rem;
   color: #cfa69b;
   font-style: italic;
 }
 
-.meal h2,
-.meal p {
+.recipe-item h2,
+.recipe-item p {
   margin: 0;
 }
 
-.image {
+.recipe-item .image {
   position: relative;
   height: 15rem;
 }
 
-.meal img {
+.recipe-item img {
   object-fit: cover;
   object-position: center;
   height: 100%;
   width: 100%;
 }
 
-.content {
+.recipe-item .content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
 }
 
-.actions {
+.recipe-item .actions {
   padding: 1rem;
   text-align: right;
 }
 
-.actions a {
+.recipe-item .actions a {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
@@ -70,8 +70,8 @@
   text-decoration: none;
 }
 
-.actions a:hover,
-.actions a:active {
+.recipe-item .actions a:hover,
+.recipe-item .actions a:active {
   background: linear-gradient(90deg, #fd4715, #f9b241);
   box-shadow: 0 0 12px rgba(242, 100, 18, 0.8);
 }
