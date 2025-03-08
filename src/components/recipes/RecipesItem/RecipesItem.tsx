@@ -21,7 +21,7 @@ export default function MealItem({ recipe }: Props) {
   }, []);
 
   function handleWishlistClick() {
-    addToWishlist(recipe.idMeal);
+    addToWishlist(recipe);
     if (isAddedToWishlist(recipe.idMeal)) {
       setIsInWishlist(true);
     } else {

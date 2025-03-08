@@ -1,5 +1,10 @@
+import RecipesGrid from "../components/recipes/RecipesGrid/RecipesGrid";
+
 function WishlistPage() {
-  return <main>Wishlist</main>;
+  const recipes = localStorage.getItem("wishlist");
+  const parsedRecipes = recipes ? JSON.parse(recipes) : [];
+
+  return <RecipesGrid recipes={parsedRecipes} />;
 }
 
 export default WishlistPage;

@@ -1,19 +1,21 @@
+import { Meal } from "../types/meals";
+
 export function useWishlist() {
-  const addToWishlist = (id: string) => {
+  const addToWishlist = (meal: Meal) => {
     const wishlist = localStorage.getItem("wishlist");
     if (wishlist) {
       let parsedWishlist = JSON.parse(wishlist);
 
-      if (wishlist.includes(id)) {
+      if (wishlist.includes(meal.idMeal)) {
         parsedWishlist = parsedWishlist.filter(
-          (itemId: string) => itemId !== id
+          (mealItem: Meal) => mealItem.idMeal !== meal.idMeal
         );
       } else {
-        parsedWishlist.push(id);
+        parsedWishlist.push(meal);
       }
       localStorage.setItem("wishlist", JSON.stringify(parsedWishlist));
     } else {
-      localStorage.setItem("wishlist", JSON.stringify([id]));
+      localStorage.setItem("wishlist", JSON.stringify([meal]));
     }
   };
 
@@ -22,8 +24,7 @@ export function useWishlist() {
 
     if (wishlist) {
       let parsedWishlist = JSON.parse(wishlist);
-      console.log(parsedWishlist);
-      return parsedWishlist && parsedWishlist.includes(id);
+      return parsedWishlist && parsedWishlist.some((meal: Meal) => meal.idMeal === id);
     }
 
     return false;
