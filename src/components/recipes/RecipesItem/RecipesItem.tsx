@@ -48,7 +48,7 @@ export default function MealItem({ recipe }: Props) {
             <CiHeart size={36} onClick={handleWishlistClick} />
           )}
 
-          <Link to={recipe.idMeal}>View Details</Link>
+          <Link to={`/${recipe.idMeal}`}>View Details</Link>
         </div>
       </div>
     </article>

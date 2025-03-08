@@ -69,6 +69,11 @@
   color: #fff;
 }
 
+.recipe-details .wishlist {
+  margin-top: 20px;
+  cursor: pointer;
+}
+
 .recipe-details .instructions {
   font-size: 1.25rem;
   line-height: 1.5;
