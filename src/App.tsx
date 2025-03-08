@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router";
-import RecipesPage from "./pages/RecipesPage";
+import RecipesPage from "./pages/RecipesPage/RecipesPage";
 import RecipePage from "./pages/RecipePage";
 import WishlistPage from "./pages/WishlistPage";
+import "./app.css";
 
 function App() {
   return (

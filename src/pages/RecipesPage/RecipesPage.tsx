@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMeals, getMealsCategories } from "../api/meals";
+import { getMeals, getMealsCategories } from "../../api/meals";
 import { useState, useEffect } from "react";
+import RecipesHeader from "../../components/recipes/RecipesHeader";
+import "./recipes-page.css";
 
 function RecipesPage() {
   // Запрос категорий
@@ -41,22 +43,11 @@ function RecipesPage() {
 
   return (
     <main>
-      <div>
-        <h2>Categories:</h2>
-        <nav>
-          <ul>
-            {mealsCategoriesQuery.data?.meals.map((category) => (
-              <li
-                key={category.strCategory}
-                onClick={() => setSelectedCategory(category.strCategory)}
-                style={{ cursor: "pointer" }}
-              >
-                {category.strCategory}
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+      <RecipesHeader
+        categories={mealsCategoriesQuery.data?.meals || []}
+        selectedCategory={selectedCategory}
+        selectCategory={setSelectedCategory}
+      />
 
       <div>
         <h2>Meals:</h2>
