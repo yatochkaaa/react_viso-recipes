@@ -65,6 +65,7 @@ function RecipesPage() {
   }
 
   const handleCategoryChange = (category: string | null) => {
+    if (category === selectedCategory) return
     setSelectedCategory(category);
     setAllMeals([]);
     setCurrentPage(1);
