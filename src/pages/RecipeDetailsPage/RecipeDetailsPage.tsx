@@ -48,6 +48,16 @@ function RecipePage() {
     return <div>No meal found</div>;
   }
 
+  const ingredients = Object.keys(meal)
+    // @ts-ignore
+    .filter((key) => key.startsWith("strIngredient") && meal[key])
+    .map((key, index) => ({
+      // @ts-ignore
+      ingredient: meal[key],
+      // @ts-ignore
+      measure: meal[`strMeasure${index + 1}`] || "",
+    }));
+
   return (
     <div className="recipe-details">
       <header className="header">
@@ -78,10 +88,18 @@ function RecipePage() {
         </div>
       </header>
       <main>
-        <p
-          className="instructions"
-          dangerouslySetInnerHTML={{ __html: meal.strInstructions }}
-        ></p>
+        <ul className="ingridients">
+          <h1>Ingridients</h1>
+          {ingredients.map((item, index) => (
+            <li key={index}>
+              {item.ingredient} - <span>{item.measure.trim()}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="instructions">
+          <h1>Instructions</h1>
+          <p dangerouslySetInnerHTML={{ __html: meal.strInstructions }}></p>
+        </div>
       </main>
     </div>
   );
