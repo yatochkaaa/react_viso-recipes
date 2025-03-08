@@ -46,17 +46,9 @@ function RecipesPage() {
 
   if (mealsCategoriesQuery.isLoading) {
     return (
-      <ClipLoader
-        color="white"
-        loading={true}
-        size={150}
-        aria-label="Loading Spinner"
-        cssOverride={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-        }}
-      />
+      <h1 style={{ textAlign: "center", marginTop: 48, color: "#ddd6cb" }}>
+        Loading...
+      </h1>
     );
   }
 
