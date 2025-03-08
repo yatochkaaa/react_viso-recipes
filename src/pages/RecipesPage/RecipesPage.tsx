@@ -6,6 +6,7 @@ import "./recipes-page.css";
 import RecipesGrid from "../../components/recipes/RecipesGrid/RecipesGrid";
 import RecipesPagination from "../../components/recipes/RecipesPagination/RecipesPagination";
 import { Meal } from "../../types/meals";
+import { ClipLoader } from "react-spinners";
 
 function RecipesPage() {
   const mealsCategoriesQuery = useQuery({
@@ -65,7 +66,7 @@ function RecipesPage() {
   }
 
   const handleCategoryChange = (category: string | null) => {
-    if (category === selectedCategory) return
+    if (category === selectedCategory) return;
     setSelectedCategory(category);
     setAllMeals([]);
     setCurrentPage(1);
@@ -80,18 +81,30 @@ function RecipesPage() {
       />
 
       {mealsQuery.isLoading ? (
-        <div>Loading meals...</div>
+        <ClipLoader
+          color="white"
+          loading={true}
+          size={150}
+          aria-label="Loading Spinner"
+          cssOverride={{
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        />
       ) : mealsQuery.isError ? (
         <div>Error loading meals: {mealsQuery.error.message}</div>
       ) : (
         <RecipesGrid recipes={currentMeals || []} />
       )}
 
-      <RecipesPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePageChange={handlePageChange}
-      />
+      {!mealsQuery.isLoading && (
+        <RecipesPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
+      )}
     </main>
   );
 }
