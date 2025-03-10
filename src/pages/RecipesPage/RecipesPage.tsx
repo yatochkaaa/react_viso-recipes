@@ -7,6 +7,7 @@ import RecipesGrid from "../../components/recipes/RecipesGrid/RecipesGrid";
 import RecipesPagination from "../../components/recipes/RecipesPagination/RecipesPagination";
 import { Meal } from "../../types/meals";
 import { ClipLoader } from "react-spinners";
+import { useDebounce } from "../../hooks/useDebounce";
 
 function RecipesPage() {
   const mealsCategoriesQuery = useQuery({
@@ -16,12 +17,16 @@ function RecipesPage() {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [allMeals, setAllMeals] = useState<Meal[]>([]);
+  const [currentMeals, setCurrentMeals] = useState<Meal[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [mealsPerPage] = useState(9);
+
+  const [searchInput, setSearchInput] = useState("");
+  const debouncedSearch = useDebounce(searchInput, 1000);
+
   const indexOfLastMeal = currentPage * mealsPerPage;
   const indexOfFirstMeal = indexOfLastMeal - mealsPerPage;
-  const currentMeals = allMeals.slice(indexOfFirstMeal, indexOfLastMeal);
-  const totalPages = Math.ceil(allMeals.length / mealsPerPage);
+  const totalPages = Math.ceil(currentMeals.length / mealsPerPage);
 
   const mealsQuery = useQuery({
     queryKey: ["meals", selectedCategory],
@@ -43,6 +48,13 @@ function RecipesPage() {
       setSelectedCategory(mealsCategoriesQuery.data.meals[0].strCategory);
     }
   }, [mealsCategoriesQuery.data]);
+
+  useEffect(() => {
+    const filteredMeals = allMeals.filter((meal) =>
+      meal.strMeal.toLowerCase().includes(debouncedSearch.toLowerCase())
+    );
+    setCurrentMeals(filteredMeals);
+  }, [debouncedSearch, allMeals]);
 
   if (mealsCategoriesQuery.isLoading) {
     return (
@@ -82,7 +94,12 @@ function RecipesPage() {
     if (category === selectedCategory) return;
     setSelectedCategory(category);
     setAllMeals([]);
+    setCurrentMeals([]);
     setCurrentPage(1);
+  };
+
+  const changeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
   };
 
   return (
@@ -91,6 +108,13 @@ function RecipesPage() {
         categories={mealsCategoriesQuery.data?.meals || []}
         selectedCategory={selectedCategory}
         selectCategory={handleCategoryChange}
+      />
+
+      <input
+        className="search-input"
+        type="text"
+        value={searchInput}
+        onChange={changeSearchInput}
       />
 
       {mealsQuery.isLoading ? (
@@ -108,7 +132,9 @@ function RecipesPage() {
       ) : mealsQuery.isError ? (
         <div>Error loading meals: {mealsQuery.error.message}</div>
       ) : (
-        <RecipesGrid recipes={currentMeals || []} />
+        <RecipesGrid
+          recipes={currentMeals.slice(indexOfFirstMeal, indexOfLastMeal) || []}
+        />
       )}
 
       {!mealsQuery.isLoading && (

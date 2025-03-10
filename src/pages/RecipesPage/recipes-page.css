@@ -16,7 +16,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap:  24px;
+  gap: 24px;
 }
 
 .recipes-page .highlight {
@@ -24,4 +24,18 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.search-input {
+  display: flex;
+  justify-content: center;
+  margin: 3rem auto 3rem auto;
+  padding: 8px 16px 8px 8px;
+  width: 250px;
+  border-radius: 8px;
+  background-color: #ddd6cb;
+  border: 0;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  color: #25200f;
+  font-size: 16px;
 }
